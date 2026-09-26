@@ -1,0 +1,128 @@
+/* Luxury scroll reveal — slow, refined, alive */
+
+.reveal {
+  --reveal-delay: 0ms;
+  --reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --reveal-duration: 1.15s;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease) var(--reveal-delay),
+    transform var(--reveal-duration) var(--reveal-ease) var(--reveal-delay),
+    filter var(--reveal-duration) var(--reveal-ease) var(--reveal-delay),
+    clip-path 1.35s var(--reveal-ease) var(--reveal-delay);
+}
+
+.reveal-up {
+  transform: translate3d(0, 48px, 0);
+  filter: blur(6px);
+}
+
+.reveal-fade {
+  transform: none;
+  filter: blur(4px);
+}
+
+.reveal-left {
+  transform: translate3d(-36px, 0, 0);
+  filter: blur(5px);
+}
+
+.reveal-right {
+  transform: translate3d(36px, 0, 0);
+  filter: blur(5px);
+}
+
+.reveal-scale {
+  transform: translate3d(0, 28px, 0) scale(0.96);
+  filter: blur(8px);
+}
+
+.reveal-clip {
+  transform: translate3d(0, 24px, 0);
+  filter: none;
+  clip-path: inset(0 0 40% 0);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+  clip-path: inset(0 0 0 0);
+}
+
+.reveal-clip.is-in {
+  clip-path: inset(0 0 0 0);
+}
+
+.reveal-stagger > .reveal:nth-child(1) {
+  --reveal-delay: 0ms;
+}
+
+.reveal-stagger > .reveal:nth-child(2) {
+  --reveal-delay: 90ms;
+}
+
+.reveal-stagger > .reveal:nth-child(3) {
+  --reveal-delay: 180ms;
+}
+
+.reveal-stagger > .reveal:nth-child(4) {
+  --reveal-delay: 270ms;
+}
+
+.reveal-stagger > .reveal:nth-child(5) {
+  --reveal-delay: 360ms;
+}
+
+.reveal-stagger > .reveal:nth-child(6) {
+  --reveal-delay: 450ms;
+}
+
+.reveal-stagger > .reveal:nth-child(7) {
+  --reveal-delay: 540ms;
+}
+
+.reveal-stagger > .reveal:nth-child(8) {
+  --reveal-delay: 630ms;
+}
+
+.reveal-stagger > .reveal:nth-child(9) {
+  --reveal-delay: 720ms;
+}
+
+.reveal-stagger > .reveal:nth-child(10) {
+  --reveal-delay: 810ms;
+}
+
+@media (max-width: 640px) {
+  .reveal-up {
+    transform: translate3d(0, 32px, 0);
+    filter: blur(4px);
+  }
+
+  .reveal-left,
+  .reveal-right {
+    transform: translate3d(0, 28px, 0);
+  }
+
+  .reveal {
+    --reveal-duration: 0.95s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-up,
+  .reveal-fade,
+  .reveal-left,
+  .reveal-right,
+  .reveal-scale,
+  .reveal-clip {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+}

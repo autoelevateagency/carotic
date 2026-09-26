@@ -7,6 +7,7 @@ export type Dictionary = {
   };
   nav: {
     logo: string;
+    home: string;
     services: string;
     gallery: string;
     about: string;
@@ -16,8 +17,6 @@ export type Dictionary = {
   };
   hero: {
     ariaLabel: string;
-    volume: string;
-    markLabel: string;
     wordmark: string;
     cultureLine: string;
     metaEst: string;
@@ -50,9 +49,13 @@ export type Dictionary = {
   };
   testimonial: {
     eyebrow: string;
-    quote: string;
-    name: string;
-    role: string;
+    prevAria: string;
+    nextAria: string;
+    reviews: Array<{
+      quote: string;
+      name: string;
+      role: string;
+    }>;
   };
   about: {
     stat: string;
@@ -66,11 +69,10 @@ export type Dictionary = {
     title: string;
     hoursLabel: string;
     hoursValue: string;
+    hoursDetail: Array<{ day: string; time: string }>;
     phoneLabel: string;
     phoneValue: string;
     phoneHref: string;
-    emailLabel: string;
-    emailValue: string;
     addressLabel: string;
     addressValue: string;
     mapLabel: string;
@@ -93,24 +95,40 @@ export type Dictionary = {
     about: string;
     contact: string;
     instagram: string;
+    tiktok: string;
+    facebook: string;
     copyright: string;
     location: string;
+    social: {
+      instagram: string;
+      tiktok: string;
+      facebook: string;
+    };
   };
 };
 
-const SHOP_ADDRESS = "1609 Miller St, Houston, TX 77003";
+const SHOP_ADDRESS = "1609 Miller St, Downtown Houston, TX 77003";
 const MAP_QUERY = encodeURIComponent(SHOP_ADDRESS);
 const MAP_EMBED_URL = `https://www.google.com/maps?q=${MAP_QUERY}&z=15&output=embed`;
 const MAP_LINK_URL = `https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`;
+const PHONE_DISPLAY = "+1 210-906-7410";
+const PHONE_HREF = "tel:+12109067410";
+
+const SOCIAL = {
+  instagram: "https://www.instagram.com/_carotic/",
+  tiktok: "https://www.tiktok.com/@caroticllc",
+  facebook: "https://www.facebook.com/Caroticllc",
+} as const;
 
 const en: Dictionary = {
   meta: {
-    title: "CAROTIC — Built Around the Culture",
+    title: "CAROTIC LLC — Premium Wraps & Custom Builds · Houston",
     description:
-      "Houston custom car builds, body & paint, and late-night workshop culture. CAROTIC — 1609 Miller St.",
+      "Carotic LLC specializes in custom exterior color changes, upholstery, and custom interior & exterior lighting. 1609 Miller St, Downtown Houston.",
   },
   nav: {
     logo: "CAROTIC",
+    home: "Home",
     services: "Services",
     gallery: "Gallery",
     about: "About",
@@ -120,15 +138,13 @@ const en: Dictionary = {
   },
   hero: {
     ariaLabel: "CAROTIC — The Mark",
-    volume: "Vol. 01",
-    markLabel: "The Mark",
     wordmark: "CAROTIC",
     cultureLine: "Automotive Culture",
-    metaEst: "Est. Underground",
-    metaLocation: "Houston · Miller St",
-    metaCategory: "Wraps · Builds · Night",
+    metaEst: "Carotic LLC",
+    metaLocation: "Downtown Houston",
+    metaCategory: "Wraps · Starlight · Lighting",
     metaSide1: "1609 Miller St",
-    metaSide2: "Houston, TX 77003",
+    metaSide2: "Downtown Houston, TX 77003",
     statement1: "Leave",
     statement2: "the mark",
     statement3: "on the street.",
@@ -139,23 +155,23 @@ const en: Dictionary = {
     items: [
       {
         num: "01",
-        title: "Color PPF & Wraps",
-        desc: "Full-color PPF, satin and gloss wraps built for Houston heat — finished in-house on Miller St.",
+        title: "Premium Vehicle Wraps",
+        desc: "Custom exterior color changes and premium wraps finished in-house on Miller St.",
       },
       {
         num: "02",
-        title: "Custom Lighting",
-        desc: "Ambient kits, roof accents and lighting setups that hit hard after dark.",
+        title: "Starlight Headliners",
+        desc: "Starlight headliner installs that turn the cabin into a night-sky showpiece.",
       },
       {
         num: "03",
-        title: "Starlight & Interior",
-        desc: "Starlight headliners, seat upholstery and full cabin builds — show-ready every time.",
+        title: "Interior & Exterior Lighting",
+        desc: "Custom interior and exterior lighting setups built to match your vision.",
       },
       {
         num: "04",
-        title: "Trucks & Builds",
-        desc: "Sky lounge trucks, two-tones and the street builds Houston shows up for.",
+        title: "Window Tinting",
+        desc: "Clean, precise window tinting for heat control, privacy, and a finished look.",
       },
     ],
   },
@@ -167,33 +183,58 @@ const en: Dictionary = {
   },
   testimonial: {
     eyebrow: "FROM THE COMMUNITY",
-    quote:
-      "They didn't just wrap the car. They understood exactly what we were going for.",
-    name: "Marcus T.",
-    role: "Houston · Full Wrap Owner",
+    prevAria: "Previous review",
+    nextAria: "Next review",
+    reviews: [
+      {
+        quote:
+          "I recently got my Mustang's stripes done, and it looks absolutely incredible. I'm incredibly grateful to Ashli, my dear friend, and her boss for their exceptional tips and kindness throughout my experience. I highly recommend that you all come here.",
+        name: "Alexis Chaar",
+        role: "Mustang · Stripes",
+      },
+      {
+        quote:
+          "They did my Mercedes GT. Amazing price for the quality of work. Great customer service, great shop.",
+        name: "Kevin Barber",
+        role: "Mercedes GT",
+      },
+      {
+        quote:
+          "I enjoyed working with Carotic! I was able to get exactly what I wanted and the deals they have are really great. The work is exceptional! Can't wait to work on more projects together. 5 STARS",
+        name: "Sir Burrna",
+        role: "Carotic Client",
+      },
+    ],
   },
   about: {
-    stat: "03",
+    stat: "04",
     headBefore: "Carotic isn't ",
     headAccent: "just",
     headAfter: " about the cars.",
-    copy: "It's about Houston car culture — late-night meets, the crew that shows up every time, the paint job that took three tries to get right. From our shop on Miller St, we build cars the same way the culture built us: raw, hands-on, unapologetic.",
-    panelLabel: "WORKSHOP — 1609 MILLER ST, HOUSTON",
+    copy: "We specialize in custom exterior color changes, upholstery, and custom interior & exterior lighting. Our goal is to bring your dreams of the perfect car to reality — from our shop at 1609 Miller St in Downtown Houston.",
+    panelLabel: "CAROTIC LLC — 1609 MILLER ST, HOUSTON",
   },
   contact: {
     title: "Contact",
     hoursLabel: "Hours",
-    hoursValue: "Mon–Sat, 11:00 AM – 10:00 PM",
+    hoursValue: "Mon–Fri, 9:30 AM – 6:00 PM · Closed Sat–Sun",
+    hoursDetail: [
+      { day: "Monday", time: "9:30 AM – 6:00 PM" },
+      { day: "Tuesday", time: "9:30 AM – 6:00 PM" },
+      { day: "Wednesday", time: "9:30 AM – 6:00 PM" },
+      { day: "Thursday", time: "9:30 AM – 6:00 PM" },
+      { day: "Friday", time: "9:30 AM – 6:00 PM" },
+      { day: "Saturday", time: "Closed" },
+      { day: "Sunday", time: "Closed" },
+    ],
     phoneLabel: "Phone",
-    phoneValue: "(713) 000-0000",
-    phoneHref: "tel:+17130000000",
-    emailLabel: "Email",
-    emailValue: "build@carotic.com",
+    phoneValue: PHONE_DISPLAY,
+    phoneHref: PHONE_HREF,
     addressLabel: "Address",
     addressValue: SHOP_ADDRESS,
-    mapLabel: "CAROTIC · HOUSTON",
+    mapLabel: "CAROTIC LLC",
     mapStreet: "1609 Miller St",
-    mapCity: "Houston, TX 77003",
+    mapCity: "Downtown Houston, TX 77003",
     mapEmbedUrl: MAP_EMBED_URL,
     mapLinkUrl: MAP_LINK_URL,
   },
@@ -202,8 +243,8 @@ const en: Dictionary = {
     line1: "YOUR CAR.",
     line2: "YOUR BUILD.",
     line3: "YOUR CULTURE.",
-    sub: "Tell us what you're driving in Houston and what you've got in mind. Swing by Miller St — we'll take it from there.",
-    button: "Book a build",
+    sub: "Tell us what you're driving and what you've got in mind. Call Carotic LLC or swing by Miller St — we'll take it from there.",
+    button: "Call now",
   },
   footer: {
     services: "Services",
@@ -211,19 +252,23 @@ const en: Dictionary = {
     about: "About",
     contact: "Contact",
     instagram: "Instagram",
-    copyright: "© 2026 CAROTIC. All rights reserved.",
-    location: "Houston, TX",
+    tiktok: "TikTok",
+    facebook: "Facebook",
+    copyright: "© 2026 Carotic LLC. All rights reserved.",
+    location: "Downtown Houston, TX",
+    social: SOCIAL,
   },
 };
 
 const ur: Dictionary = {
   meta: {
-    title: "CAROTIC — کلچر کے گرد بنایا گیا",
+    title: "CAROTIC LLC — پریمیم ریپس اور کسٹم بلڈز · ہیوسٹن",
     description:
-      "ہیوسٹن کسٹم کار بلڈز، باڈی اینڈ پینٹ، اور رات کی ورکشاپ کلچر۔ CAROTIC — 1609 Miller St۔",
+      "Carotic LLC کسٹم ایکسٹیریئر کلر چینجز، اپہولسٹری، اور انٹیریئر و ایکسٹیریئر لائٹنگ میں مہارت رکھتا ہے۔ 1609 Miller St، Downtown Houston۔",
   },
   nav: {
     logo: "CAROTIC",
+    home: "ہوم",
     services: "سروسز",
     gallery: "گیلری",
     about: "ہمارے بارے",
@@ -233,15 +278,13 @@ const ur: Dictionary = {
   },
   hero: {
     ariaLabel: "CAROTIC — دی مارک",
-    volume: "Vol. 01",
-    markLabel: "دی مارک",
     wordmark: "CAROTIC",
     cultureLine: "آٹوموٹو کلچر",
-    metaEst: "انڈر گراؤنڈ",
-    metaLocation: "ہیوسٹن · Miller St",
-    metaCategory: "ریپس · بلڈز · نائٹ",
+    metaEst: "Carotic LLC",
+    metaLocation: "Downtown Houston",
+    metaCategory: "ریپس · سٹار لائٹ · لائٹنگ",
     metaSide1: "1609 Miller St",
-    metaSide2: "Houston, TX 77003",
+    metaSide2: "Downtown Houston, TX 77003",
     statement1: "Leave",
     statement2: "the mark",
     statement3: "on the street.",
@@ -252,23 +295,23 @@ const ur: Dictionary = {
     items: [
       {
         num: "01",
-        title: "کلر پی پی ایف اینڈ ریپس",
-        desc: "فل کلر پی پی ایف، سیٹن اور گلاس ریپس — ہیوسٹن ہیٹ کے لیے، Miller St پر۔",
+        title: "پریمیم وہیکل ریپس",
+        desc: "کسٹم ایکسٹیریئر کلر چینجز اور پریمیم ریپس — Miller St پر انہاؤس۔",
       },
       {
         num: "02",
-        title: "کسٹم لائٹنگ",
-        desc: "ایمبیئنٹ کٹس، روف ایکسنٹس اور لائٹنگ جو رات میں نمایاں ہو۔",
+        title: "سٹار لائٹ ہیڈ لائنرز",
+        desc: "سٹار لائٹ ہیڈ لائنر انسٹالز جو کیبن کو شوپیس بناتے ہیں۔",
       },
       {
         num: "03",
-        title: "سٹار لائٹ اینڈ انٹیریئر",
-        desc: "سٹار لائٹ ہیڈ لائنرز، سیٹ اپہولسٹری اور فل کیبن بلڈز۔",
+        title: "انٹیریئر اینڈ ایکسٹیریئر لائٹنگ",
+        desc: "کسٹم انٹیریئر اور ایکسٹیریئر لائٹنگ آپ کے ویژن کے مطابق۔",
       },
       {
         num: "04",
-        title: "ٹرکس اینڈ بلڈز",
-        desc: "سکائی لاؤنج ٹرکس، ٹو ٹونز اور ہیوسٹن سٹریٹ بلڈز۔",
+        title: "ونڈو ٹنٹنگ",
+        desc: "صاف اور درست ونڈو ٹنٹنگ — ہیٹ کنٹرول، پرائیویسی، اور فنشڈ لک۔",
       },
     ],
   },
@@ -280,32 +323,58 @@ const ur: Dictionary = {
   },
   testimonial: {
     eyebrow: "کمیونٹی سے",
-    quote: "انہوں نے صرف ریپ نہیں کیا۔ انہوں نے سمجھا کہ ہم کیا چاہتے تھے۔",
-    name: "مارکس ٹی۔",
-    role: "ہیوسٹن · Full Wrap Owner",
+    prevAria: "پچھلا ریویو",
+    nextAria: "اگلا ریویو",
+    reviews: [
+      {
+        quote:
+          "I recently got my Mustang's stripes done, and it looks absolutely incredible. I'm incredibly grateful to Ashli, my dear friend, and her boss for their exceptional tips and kindness throughout my experience. I highly recommend that you all come here.",
+        name: "Alexis Chaar",
+        role: "Mustang · Stripes",
+      },
+      {
+        quote:
+          "They did my Mercedes GT. Amazing price for the quality of work. Great customer service, great shop.",
+        name: "Kevin Barber",
+        role: "Mercedes GT",
+      },
+      {
+        quote:
+          "I enjoyed working with Carotic! I was able to get exactly what I wanted and the deals they have are really great. The work is exceptional! Can't wait to work on more projects together. 5 STARS",
+        name: "Sir Burrna",
+        role: "Carotic Client",
+      },
+    ],
   },
   about: {
-    stat: "03",
+    stat: "04",
     headBefore: "Carotic صرف ",
     headAccent: "کاروں",
     headAfter: " کے بارے میں نہیں۔",
-    copy: "یہ ہیوسٹن کار کلچر کے بارے میں ہے — رات کے میٹس، وہ کریو جو ہمیشہ آتا ہے، وہ پینٹ جاب جو تین بار درست ہوئی۔ ہماری Miller St شاپ سے۔",
-    panelLabel: "WORKSHOP — 1609 MILLER ST, HOUSTON",
+    copy: "ہم کسٹم ایکسٹیریئر کلر چینجز، اپہولسٹری، اور کسٹم انٹیریئر و ایکسٹیریئر لائٹنگ میں مہارت رکھتے ہیں۔ ہمارا مقصد آپ کی پرفیکٹ کار کے خواب کو حقیقت بنانا ہے — 1609 Miller St، Downtown Houston۔",
+    panelLabel: "CAROTIC LLC — 1609 MILLER ST, HOUSTON",
   },
   contact: {
     title: "رابطہ",
     hoursLabel: "اوقات",
-    hoursValue: "پیر–ہفتہ، 11:00 صبح – 10:00 رات",
+    hoursValue: "پیر–جمعہ، 9:30 صبح – 6:00 شام · ہفتہ–اتوار بند",
+    hoursDetail: [
+      { day: "پیر", time: "9:30 AM – 6:00 PM" },
+      { day: "منگل", time: "9:30 AM – 6:00 PM" },
+      { day: "بدھ", time: "9:30 AM – 6:00 PM" },
+      { day: "جمعرات", time: "9:30 AM – 6:00 PM" },
+      { day: "جمعہ", time: "9:30 AM – 6:00 PM" },
+      { day: "ہفتہ", time: "بند" },
+      { day: "اتوار", time: "بند" },
+    ],
     phoneLabel: "فون",
-    phoneValue: "(713) 000-0000",
-    phoneHref: "tel:+17130000000",
-    emailLabel: "ای میل",
-    emailValue: "build@carotic.com",
+    phoneValue: PHONE_DISPLAY,
+    phoneHref: PHONE_HREF,
     addressLabel: "پتہ",
     addressValue: SHOP_ADDRESS,
-    mapLabel: "CAROTIC · HOUSTON",
+    mapLabel: "CAROTIC LLC",
     mapStreet: "1609 Miller St",
-    mapCity: "Houston, TX 77003",
+    mapCity: "Downtown Houston, TX 77003",
     mapEmbedUrl: MAP_EMBED_URL,
     mapLinkUrl: MAP_LINK_URL,
   },
@@ -314,8 +383,8 @@ const ur: Dictionary = {
     line1: "YOUR CAR.",
     line2: "YOUR BUILD.",
     line3: "YOUR CULTURE.",
-    sub: "بتائیں ہیوسٹن میں آپ کیا چلا رہے ہیں۔ Miller St پر آئیں — باقی ہم سنبھال لیں گے۔",
-    button: "بلڈ بک کریں",
+    sub: "بتائیں آپ کیا چلا رہے ہیں۔ Carotic LLC کو کال کریں یا Miller St پر آئیں۔",
+    button: "ابھی کال کریں",
   },
   footer: {
     services: "سروسز",
@@ -323,8 +392,11 @@ const ur: Dictionary = {
     about: "ہمارے بارے",
     contact: "رابطہ",
     instagram: "انسٹاگرام",
-    copyright: "© 2026 CAROTIC۔ جملہ حقوق محفوظ۔",
-    location: "ہیوسٹن، ٹی ایکس",
+    tiktok: "ٹک ٹاک",
+    facebook: "فیس بک",
+    copyright: "© 2026 Carotic LLC۔ جملہ حقوق محفوظ۔",
+    location: "Downtown Houston, TX",
+    social: SOCIAL,
   },
 };
 

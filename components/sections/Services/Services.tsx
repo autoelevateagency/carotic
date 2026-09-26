@@ -3,6 +3,8 @@
 import { useRef } from "react";
 import type { Dictionary } from "@/data/dictionary";
 import { SITE_ASSETS } from "@/data/assets";
+import { Reveal } from "@/components/Reveal/Reveal";
+import { useReveal } from "@/components/Reveal/useReveal";
 
 type ServicesProps = {
   dict: Dictionary["services"];
@@ -12,13 +14,16 @@ export const Services = ({ dict }: ServicesProps): React.JSX.Element => {
   return (
     <section className="services" id="services">
       <div className="wrap" style={{ paddingBottom: 0 }}>
-        <span className="eyebrow">{dict.eyebrow}</span>
+        <Reveal variant="fade" delay={40}>
+          <span className="eyebrow">{dict.eyebrow}</span>
+        </Reveal>
       </div>
       {dict.items.map((item, index) => (
         <ServiceRow
           key={item.num}
           item={item}
           mediaSrc={SITE_ASSETS.services[index] ?? SITE_ASSETS.services[0]}
+          delay={index * 110}
         />
       ))}
     </section>
@@ -28,10 +33,16 @@ export const Services = ({ dict }: ServicesProps): React.JSX.Element => {
 type ServiceRowProps = {
   item: Dictionary["services"]["items"][number];
   mediaSrc: string;
+  delay: number;
 };
 
-const ServiceRow = ({ item, mediaSrc }: ServiceRowProps): React.JSX.Element => {
+const ServiceRow = ({
+  item,
+  mediaSrc,
+  delay,
+}: ServiceRowProps): React.JSX.Element => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const reveal = useReveal({ variant: "up", delay });
   const kind = mediaSrc.endsWith(".mp4") ? "video" : "image";
 
   const play = (): void => {
@@ -47,7 +58,9 @@ const ServiceRow = ({ item, mediaSrc }: ServiceRowProps): React.JSX.Element => {
 
   return (
     <div
-      className="svc-row"
+      ref={reveal.ref as React.RefObject<HTMLDivElement>}
+      className={`svc-row ${reveal.className}`}
+      style={reveal.style}
       onMouseEnter={play}
       onMouseLeave={pause}
       onFocus={play}

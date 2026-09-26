@@ -15,9 +15,13 @@ const body = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "CAROTIC — Built Around the Culture",
+  title: "CAROTIC LLC — Premium Wraps & Custom Builds · Houston",
   description:
-    "Houston custom car builds, body & paint, and late-night workshop culture. CAROTIC — 1609 Miller St.",
+    "Carotic LLC specializes in custom exterior color changes, upholstery, and custom interior & exterior lighting. 1609 Miller St, Downtown Houston.",
+  icons: {
+    icon: [{ url: "/icon", type: "image/png" }],
+    apple: [{ url: "/apple-icon", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({

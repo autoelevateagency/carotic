@@ -8,13 +8,11 @@ import "./hero.css";
 
 type HeroProps = {
   dict: Dictionary["hero"];
-  nav: Dictionary["nav"];
 };
 
-export const Hero = ({ dict, nav }: HeroProps): React.JSX.Element => {
+export const Hero = ({ dict }: HeroProps): React.JSX.Element => {
   const stageRef = useRef<HTMLElement | null>(null);
   const [isReady, setIsReady] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
@@ -34,15 +32,6 @@ export const Hero = ({ dict, nav }: HeroProps): React.JSX.Element => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const closeMenu = (): void => setIsMenuOpen(false);
-
-  const navItems = [
-    { href: "#services", label: nav.services, index: "01" },
-    { href: "#gallery", label: nav.gallery, index: "02" },
-    { href: "#about", label: nav.about, index: "03" },
-    { href: "#contact", label: nav.contact, index: "04" },
-  ] as const;
 
   return (
     <header
@@ -126,45 +115,6 @@ export const Hero = ({ dict, nav }: HeroProps): React.JSX.Element => {
 
         <div className="mark-grain" />
       </div>
-
-      <nav className="mark-nav" aria-label="Primary">
-        <a href="#" className="mark-nav-index" onClick={closeMenu}>
-          <span className="mark-nav-vol">{dict.volume}</span>
-          <span className="mark-nav-slash" aria-hidden="true">
-            /
-          </span>
-          <span className="mark-nav-mark">{dict.markLabel}</span>
-        </a>
-
-        <ul className={`mark-nav-links${isMenuOpen ? " is-open" : ""}`}>
-          {navItems.map((item) => (
-            <li key={item.href}>
-              <a href={item.href} onClick={closeMenu}>
-                <span className="mark-nav-num" aria-hidden="true">
-                  {item.index}
-                </span>
-                <span>{item.label}</span>
-              </a>
-            </li>
-          ))}
-          <li>
-            <a href="#booking" className="mark-nav-book" onClick={closeMenu}>
-              {nav.booking}
-            </a>
-          </li>
-        </ul>
-
-        <button
-          type="button"
-          className={`mark-nav-toggle${isMenuOpen ? " is-open" : ""}`}
-          aria-label={nav.menuAria}
-          aria-expanded={isMenuOpen}
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-        >
-          <span />
-          <span />
-        </button>
-      </nav>
 
       <div className="mark-composition">
         <aside className="mark-meta mark-meta-left" aria-hidden="true">

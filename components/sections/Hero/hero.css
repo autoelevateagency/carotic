@@ -132,138 +132,6 @@
   animation: markGrainShift 8s steps(2) infinite;
 }
 
-/* ---------- nav (art-directed, not a header bar) ---------- */
-
-.mark-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: calc(1.25rem + env(safe-area-inset-top, 0px)) clamp(1rem, 3.5vw, 2.75rem) 0.75rem;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(8, 9, 9, 0.72) 0%, transparent 100%);
-}
-
-.mark-nav > * {
-  pointer-events: auto;
-}
-
-.mark-nav-index {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.45rem;
-  text-decoration: none;
-  color: var(--bone);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  opacity: 0;
-  transform: translateY(-8px);
-}
-
-.carotic-mark.is-ready .mark-nav-index {
-  animation: markFadeUp 1s ease 1.6s forwards;
-}
-
-.mark-nav-vol {
-  color: var(--gray);
-}
-
-.mark-nav-slash {
-  color: var(--crimson);
-}
-
-.mark-nav-mark {
-  color: var(--red);
-  font-weight: 600;
-}
-
-.mark-nav-links {
-  list-style: none;
-  display: none;
-  align-items: center;
-  gap: clamp(1rem, 2vw, 1.75rem);
-  opacity: 0;
-  transform: translateY(-8px);
-}
-
-.carotic-mark.is-ready .mark-nav-links {
-  animation: markFadeUp 1s ease 1.75s forwards;
-}
-
-.mark-nav-links a {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.35rem;
-  color: var(--gray);
-  text-decoration: none;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  transition: color 0.3s ease;
-}
-
-.mark-nav-links a:hover,
-.mark-nav-links a:focus-visible {
-  color: var(--bone);
-}
-
-.mark-nav-num {
-  color: var(--crimson);
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-}
-
-.mark-nav-book {
-  color: var(--red) !important;
-  border-bottom: 1px solid transparent;
-  padding-bottom: 0.1rem;
-}
-
-.mark-nav-book:hover,
-.mark-nav-book:focus-visible {
-  border-color: var(--red);
-}
-
-.mark-nav-toggle {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 7px;
-  width: 28px;
-  height: 28px;
-  background: none;
-  border: 0;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(-8px);
-}
-
-.carotic-mark.is-ready .mark-nav-toggle {
-  animation: markFadeUp 1s ease 1.6s forwards;
-}
-
-.mark-nav-toggle span {
-  display: block;
-  height: 1px;
-  width: 100%;
-  background: var(--bone);
-  transition: transform 0.35s ease, opacity 0.35s ease;
-}
-
-.mark-nav-toggle.is-open span:first-child {
-  transform: translateY(4px) rotate(45deg);
-}
-
-.mark-nav-toggle.is-open span:last-child {
-  transform: translateY(-4px) rotate(-45deg);
-}
-
 /* ---------- composition / type ---------- */
 
 .mark-composition {
@@ -430,14 +298,6 @@
     object-position: 78% 38%;
   }
 
-  .mark-nav-links {
-    display: flex;
-  }
-
-  .mark-nav-toggle {
-    display: none;
-  }
-
   .mark-composition {
     grid-template-columns: minmax(7rem, 12vw) 1fr minmax(8rem, 14vw);
     grid-template-rows: auto 1fr auto;
@@ -504,25 +364,7 @@
   }
 }
 
-/* ---------- mobile menu open ---------- */
-
 @media (max-width: 640px) {
-  .mark-nav-links.is-open {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.9rem;
-    position: absolute;
-    top: calc(3.4rem + env(safe-area-inset-top, 0px));
-    right: clamp(1rem, 3.5vw, 2rem);
-    padding: 1rem 1.15rem;
-    background: rgba(16, 17, 18, 0.94);
-    border: 1px solid var(--line);
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
-
   .mark-wordmark {
     left: 0.35rem;
     top: 36%;
@@ -640,9 +482,6 @@
   .mark-reveal,
   .mark-paint,
   .paint-stroke,
-  .mark-nav-index,
-  .mark-nav-links,
-  .mark-nav-toggle,
   .mark-meta,
   .mark-wordmark,
   .mark-wordmark-paint,
